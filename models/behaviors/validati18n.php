@@ -13,21 +13,21 @@ class Validati18nBehavior extends ModelBehavior {
 * @access public
 * @var array
 */
-	public $settings = array(); 
+	var $settings = array(); 
 /**
 * Default setting values
 *
 * @access private
 * @var array
 */ 	
-	private $defaults = array('country'=>'us');
+	var $_defaults = array('country'=>'us');
 /**
 * Country based regexes
 *
 * @access private
 * @var array
 */
-	private $regex = array(
+	var $_regex = array(
 		'au' => array(
 			'phone' => null,
 			'postal' => '/^[0-9]{4}$/i',
@@ -93,9 +93,9 @@ class Validati18nBehavior extends ModelBehavior {
  */
 	function setup(&$Model, $config = null) {
 		if (is_array($config)) {
-			$this->settings[$Model->alias] = array_merge($this->defaults, $config);            
+			$this->settings[$Model->alias] = array_merge($this->_defaults, $config);            
 		} else {
-			$this->settings[$Model->alias] = $this->defaults;
+			$this->settings[$Model->alias] = $this->_defaults;
 		}
 	}
 /**
@@ -113,8 +113,8 @@ class Validati18nBehavior extends ModelBehavior {
 		if(!is_string($country)){
 			$country = $this->settings[$Model->alias]['country'];
 		}
-		if($this->regex[$country]['phone']) {
-			return preg_match($this->regex[$country]['phone'], $check);
+		if($this->_regex[$country]['phone']) {
+			return preg_match($this->_regex[$country]['phone'], $check);
 		}
 		return false;
 	}
@@ -133,8 +133,8 @@ class Validati18nBehavior extends ModelBehavior {
 		if(!is_string($country)){
 			$country = $this->settings[$Model->alias]['country'];
 		}
-		if($this->regex[$country]['postal']) {
-			return preg_match($this->regex[$country]['postal'], $check);
+		if($this->_regex[$country]['postal']) {
+			return preg_match($this->_regex[$country]['postal'], $check);
 		}
 		return false;
 	}
@@ -153,8 +153,8 @@ class Validati18nBehavior extends ModelBehavior {
 		if(!is_string($country)){
 			$country = $this->settings[$Model->alias]['country'];
 		}
-		if($this->regex[$country]['ssn']) {
-			return preg_match($this->regex[$country]['ssn'], $check);
+		if($this->_regex[$country]['ssn']) {
+			return preg_match($this->_regex[$country]['ssn'], $check);
 		}
 		return false;
 	}
